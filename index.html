@@ -1,1 +1,159 @@
-2024
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Natania Wood</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+    <!-- External CSS Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script>
+        // Scroll to the top when the page loads or refreshes
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Background Music -->
+    <audio autoplay loop id="background-music">
+        <source src="assets/audio/background-music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <!-- Video Background -->
+        <video autoplay muted loop id="hero-video">
+            <source src="assets/videos/forest-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1>Natania Wood</h1>
+            <p>Welcome. There is nothing here.</p>
+
+            <!-- Play/Pause Button for Background Music -->
+            <button class="play-btn" onclick="playMusic()">
+                <i class="fa fa-play play-icon"></i>
+                <i class="fa fa-pause pause-icon"></i>
+            </button>
+
+            <!-- Call to Action Button -->
+            <a href="#features" class="cta-btn">Explore</a>
+        </div>
+    </header>
+
+    <!-- Social Media Links Section -->
+    <section id="social-media" class="social-media">
+        <div class="social-icons">
+            <a href="https://www.instagram.com/nataaaania" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/nataaaania" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://screamintothevoid.com/" target="_blank" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/nataniawood" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Featured Content</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <h3>Unleashing the Ultimate Marketplace for Infinite Realities</h3>
+                <p>We are developing a groundbreaking platform where individuals can seamlessly trade lives, memories, and experiences with alternate versions of themselves from parallel universes. This unique, reality-bending marketplace offers unlimited opportunities for personal growth, exploration, and exchange—where there are no boundaries, no limits, and no return policies.</p>
+                <!-- Donate Button for the first card -->
+                <a href="https://paypal.me/nwood124" target="_blank" class="donate-btn">Secure Your Future</a>
+            </div>
+            <div class="feature-card">
+                <h3>Revolutionizing the Scent Economy for a Fully Monetized Sensory Experience</h3>
+                <p>Our vision is to dominate and privatize the entire spectrum of human scent—transforming everything from the fragrance of fresh rain to the subtle notes of perfume into a profitable, global commodity. With this innovation, we will create a sensory economy where individuals can purchase access to specific experiences, effectively controlling and selling the world’s olfactory landscape.</p>
+                <!-- Donate Button for the second card -->
+                <a href="https://paypal.me/nwood124" target="_blank" class="donate-btn">Get In Early</a>
+            </div>
+            <div class="feature-card">
+                <h3>Luna's Favorite Video</h3>
+                <a href="https://www.youtube.com/watch?v=6pbreU5ChmA" target="_blank">
+                    <img src="https://img.youtube.com/vi/6pbreU5ChmA/0.jpg" alt="Luna's Favorite Video" class="youtube-thumbnail">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login and Contact Buttons Section -->
+    <section id="login-contact" class="login-contact">
+        <!-- Investor Portal Button -->
+        <button class="login-btn" onclick="showLoginForm()">Investor Portal</button>
+
+        <!-- Shop Button as a link -->
+        <a href="https://configurator.porsche.com/en-US/model/992850/" target="_blank" class="shop-btn">Shop</a>
+
+        <!-- Contact Button -->
+        <button class="contact-btn" onclick="openContactForm()">Contact</button>
+    </section>
+
+    <!-- Popup Contact Form -->
+    <div id="contact-form-popup" class="contact-form-popup">
+        <div class="contact-form-container">
+            <!-- Close Button for Contact Form -->
+            <span class="close-btn" onclick="closeContactForm()">&times;</span>
+
+            <h2>Contact Me</h2>
+
+            <!-- Contact Form -->
+            <form id="contact-form" onsubmit="submitContactForm(event)">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup Login Form -->
+    <div id="login-form-popup" class="login-form-popup">
+        <div class="login-form-container">
+            <!-- Close Button for Login Form -->
+            <span class="close-btn" onclick="closeLoginForm()">&times;</span>
+
+            <h2>Login</h2>
+
+            <!-- Login Form -->
+            <form id="login-form" onsubmit="submitLoginForm(event)">
+                <input type="text" id="login-username" name="username" placeholder="Username" required>
+                <input type="password" id="login-password" name="password" placeholder="Password" required>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2025 Natania Wood | All Rights Reserved</p>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

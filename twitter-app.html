@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Investor Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header for Twitter App -->
+    <header class="app-header">
+        <h1>'Member Twitter?</h1>
+        <button onclick="window.location.href='index.html'" class="logout-btn">Go Home</button>
+    </header>
+    
+<!-- Post Form -->
+<section class="post-form">
+    <input type="text" id="username" placeholder="Enter your name" class="username-input">
+    <textarea id="post-input" placeholder="What's happening?" rows="4" cols="50"></textarea>
+
+    <!-- Button Container for Post and Upload -->
+    <div class="button-container">
+        <label for="photo-upload" class="upload-btn">Upload Image</label>
+        <input type="file" id="photo-upload" accept="image/*" class="photo-upload">
+        <button class="post-btn" id="post-button">Post</button>
+    </div>
+
+    <!-- Preview of image -->
+    <div id="image-preview-container" style="display: none;">
+        <img id="image-preview" src="" alt="Image Preview" style="max-width: 100%; height: auto;">
+    </div>
+</section>
+
+<!-- Display Posts -->
+<section class="posts-section">
+    <h2>Recent Posts</h2>
+    <div id="posts-container" class="posts-container">
+        <!-- Posts will appear here -->
+    </div>
+</section>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,586 @@
+/* ================== General Reset ================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================== Body Styling ================== */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #fff;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+/* ------------------- HERO SECTION ------------------- */
+/* Hero Section Styling */
+.hero {
+    position: relative;
+    height: 100vh;
+}
+
+/* Video Background Styling */
+#hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Overlay Styling for Hero Section */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Hero Content Styling */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #939862;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Hero Heading Styling */
+.hero-content h1 {
+    font-size: 7rem;
+    font-family: "Pacifico", cursive;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero Paragraph Styling */
+.hero-content p {
+    font-size: 2rem;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
+}
+
+/* Play Button Styling */
+.play-btn {
+    background-color: transparent;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 20px;
+    opacity: 0.5;
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.play-btn i {
+    color: #fff;
+    font-size: 2rem;
+    position: absolute;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.play-btn .play-icon {
+    opacity: 1;
+}
+
+.play-btn.playing .play-icon {
+    opacity: 0;
+}
+
+.play-btn.playing .pause-icon {
+    opacity: 1;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Call-to-Action Button Styling */
+.cta-btn {
+    padding: 12px 30px;
+    font-size: 1.5rem;
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    background-color: #a5b853;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    opacity: 0.5;
+}
+
+.cta-btn:hover {
+    background-color: #2d2a1f;
+    opacity: 1;
+}
+
+/* ------------------- SOCIAL MEDIA SECTION ------------------- */
+/* Social Media Section Styling */
+.social-media {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #5c6045;
+}
+
+/* Social Media Section Heading */
+.social-media h2 {
+    font-size: 2.5rem;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 40px;
+    color: #191c11;
+}
+
+/* Social Media Icons Styling */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    font-size: 2rem;
+    color: #d1d7c0;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #a5b853;
+}
+
+/* ------------------- FEATURES SECTION ------------------- */
+/* Features Section Styling */
+.features {
+    padding: 55px 35px;
+    text-align: center;
+    background-color: #959778;
+}
+
+/* Features Section Heading */
+.features h2 {
+    font-size: 2.5rem;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 40px;
+    color: #191c11;
+}
+
+/* Feature Cards Container */
+.feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Feature Card Styling */
+.feature-card {
+    background-color: #191c11;
+    padding: 20px;
+    border-radius: 8px;
+    width: 450px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Feature Card Heading */
+.feature-card h3 {
+    font-size: 1.6rem;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 20px;
+    color: #d1d7c0;
+}
+
+/* Feature Card Paragraph */
+.feature-card p {
+    font-size: 1rem;
+    font-family: 'Quicksand', sans-serif;
+    color: #d1d7c0;
+}
+
+/* Hover Effect for Feature Card */
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+/* YouTube Thumbnail Styling */
+.youtube-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Donate Button Styling */
+.donate-btn {
+    display: inline-block;
+    background-color: #5e6244;
+    color: #d1d7c0;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.donate-btn:hover {
+    background-color: #4a4f2f;
+}
+
+/* ------------------- LOGIN AND CONTACT BUTTONS ------------------- */
+/* Button Container for Login, Contact, Shop */
+#login-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: #5c6045;
+    padding: 50px;
+}
+
+/* Button Styling for Login, Contact, Shop */
+.login-btn, .contact-btn, .shop-btn {
+    background-color: #5e6244;
+    color: #d1d7c0;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    min-width: 150px;
+}
+
+/* Hover Effect for Buttons */
+.login-btn:hover, .contact-btn:hover, .shop-btn:hover {
+    background-color: #191c11;
+    transform: scale(1.05);
+}
+
+/* ------------------- FORM POPUPS ------------------- */
+/* Initial Hidden State for Popups */
+.contact-form-popup, .login-form-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Form Container Styling */
+.contact-form-container, .login-form-container {
+    background-color: #959778;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+/* Form Input/Textarea Styling */
+.contact-form-container input,
+.contact-form-container textarea,
+.login-form-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #d1d7c0;
+    border-radius: 5px;
+}
+
+/* Submit Button Styling */
+.submit-btn {
+    background-color: #191c11;
+    color: #d1d7c0;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #5e6244;
+}
+
+/* Close Button Styling */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: darkred;
+}
+
+/* ------------------- FOOTER SECTION ------------------- */
+/* Footer Styling */
+.footer {
+    background-color: #191c11;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Footer Paragraph Styling */
+.footer p {
+    color: #d1d7c0;
+    font-size: 1rem;
+}
+
+
+/* ================== Mini Twitter App Styles ================== */
+
+/* General Body Styling for Mini Twitter */
+body {
+    background-color: #15202B;
+    color: #E1E8ED;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+.app-header {
+    background-color: #14171A;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* Logout Button Styling */
+.logout-btn {
+    background-color: #657786;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #AAB8C2;
+}
+
+/* Post Form Styling */
+.post-form {
+    padding: 20px;
+    background-color: #1B2631;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Post Input Fields Styling */
+.username-input,
+#post-input {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #657786;
+    background-color: #2C3E50;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Focused Post Input Styling */
+#post-input:focus {
+    border-color: #1DA1F2;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;                     /* Use flex to align buttons side by side */
+    justify-content: center;           /* Center buttons horizontally */
+    gap: 10px;                         /* Space between buttons */
+    width: 100%;                       /* Make sure container takes full width */
+    align-items: center;               /* Align buttons vertically centered */
+}
+
+/* Button Styling for Upload Image and Post */
+.upload-btn,
+.post-btn {
+    background-color: #1DA1F2;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;                       /* Adjust button width to fit content */
+}
+
+/* Custom Styling for file input (hidden) */
+.photo-upload {
+    display: none;                     /* Hide the file input */
+}
+
+
+/* Image Preview Styling */
+#image-preview-container {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+    display: none; /* Hide until an image is uploaded */
+}
+
+/* Preview Styling */
+.image-preview {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* Posts Section Styling */
+.posts-section {
+    padding: 20px;
+    background-color: #1B2631;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Post Styling */
+.post {
+    background-color: #2C3E50;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #34495E;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Post Header Styling */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-username {
+    font-weight: bold;
+    color: #1DA1F2;
+}
+
+.post-text {
+    font-size: 1.1rem;
+    color: #E1E8ED;
+}
+
+.post-time {
+    font-size: 0.9rem;
+    color: #657786;
+    align-self: flex-end;
+}
+
+/* Footer Styling for Mini Twitter */
+footer {
+    background-color: #14171A;
+    color: #657786;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+    .app-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .post-form {
+        margin: 10px;
+    }
+
+    .posts-section {
+        margin: 10px;
+    }
+
+    #post-input {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .post-btn,
+    .upload-btn {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+        width: 48%; /* Same width in mobile view */
+    }
+}
+
+/* Hide the default file input */
+.photo-upload {
+    display: none;
+}
+
+
+
+
+
+
+
