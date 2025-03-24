@@ -5,47 +5,77 @@
     box-sizing: border-box;
 }
 
+button, a.shop-btn {
+    font-family: inherit;
+    vertical-align: middle;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+
 /* ================== Body Styling ================== */
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
     color: #fff;
     overflow-x: hidden;
     overflow-y: scroll;
+    background-color: #15202B; /* Unifying theme */
 }
+
+html, body {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+/* Global Video Background */
+#hero-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+    transform: scale(var(--video-zoom, 1));
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
+/* Global Dark Overlay */
+#video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.noscroll {
+    overflow: hidden;
+  }
+
 
 /* ------------------- HERO SECTION ------------------- */
-/* Hero Section Styling */
 .hero {
-    position: relative;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
+    padding: 0 20px;
+    text-align: center;
+    position: relative;
 }
 
-/* Video Background Styling */
-#hero-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-}
-
-/* Overlay Styling for Hero Section */
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
-
-/* Hero Content Styling */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -55,26 +85,22 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
 }
 
-/* Hero Heading Styling */
 .hero-content h1 {
-    font-size: 7rem;
+    font-size: 4rem;
     font-family: "Pacifico", cursive;
     margin-bottom: 15px;
-    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
 }
 
-/* Hero Paragraph Styling */
 .hero-content p {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: 'Quicksand', sans-serif;
     margin-bottom: 10px;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
 }
 
-/* Play Button Styling */
 .play-btn {
     background-color: transparent;
     border: none;
@@ -84,7 +110,7 @@ body {
     cursor: pointer;
     position: relative;
     margin-bottom: 20px;
-    opacity: 0.5;
+    opacity: 0.3;
     width: 60px;
     height: 60px;
     transition: transform 0.3s ease;
@@ -114,92 +140,214 @@ body {
     transform: scale(1.1);
 }
 
-/* Call-to-Action Button Styling */
-.cta-btn {
-    padding: 12px 30px;
-    font-size: 1.5rem;
+/*.cta-btn {*/
+/*    padding: 10px 20px;*/
+/*    font-size: 1.2rem;*/
+/*    font-family: 'Quicksand', sans-serif;*/
+/*    color: white;*/
+/*    background-color: #a5b853;*/
+/*    text-decoration: none;*/
+/*    border-radius: 5px;*/
+/*    transition: background-color 0.3s ease;*/
+/*    opacity: 0.8;*/
+/*}*/
+
+/*.cta-btn:hover {*/
+/*    background-color: #2d2a1f;*/
+/*    opacity: 1;*/
+/*}*/
+
+/* ------------------- SECTION NAVIGATION ------------------- */
+
+section {
+  scroll-snap-align: start;
+}
+
+/* Scroll Cue Container - centered at bottom */
+.scroll-cue-container {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  text-align: center;
+}
+
+/* "Explore" Text Styling */
+.scroll-label {
+  font-size: 1.5rem;
+  color: #faffcc;
+  margin-bottom: 12px;
+  animation: pulseGlow 2.5s ease-in-out infinite;
+  font-family: 'Quicksand', sans-serif;
+  transition: opacity 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 30px;
+  padding: 8px 16px;
+  backdrop-filter: blur(10px);
+  display: block;
+  text-shadow: 0 0 6px #a5b853, 0 0 12px #faffcc;
+}
+
+
+
+.scroll-down {
     font-family: 'Quicksand', sans-serif;
-    color: white;
-    background-color: #a5b853;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    opacity: 0.5;
-}
-
-.cta-btn:hover {
-    background-color: #2d2a1f;
-    opacity: 1;
-}
-
-/* ------------------- SOCIAL MEDIA SECTION ------------------- */
-/* Social Media Section Styling */
-.social-media {
-    padding: 50px 20px;
-    text-align: center;
-    background-color: #5c6045;
-}
-
-/* Social Media Section Heading */
-.social-media h2 {
-    font-size: 2.5rem;
-    font-family: 'Quicksand', sans-serif;
-    margin-bottom: 40px;
-    color: #191c11;
-}
-
-/* Social Media Icons Styling */
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.social-icon {
-    font-size: 2rem;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.03);
     color: #d1d7c0;
-    transition: color 0.3s ease;
+    cursor: pointer;
+
+    /* Circle shape */
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+    opacity: 0.95;
+    backdrop-filter: blur(8px);
+
+    /* 💡 Brighter base glow */
+    box-shadow:
+      0 0 20px rgba(165, 184, 83, 0.8),
+      0 0 40px rgba(165, 184, 83, 0.6),
+      inset 0 0 20px rgba(165, 184, 83, 0.4);
+
+    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.4s ease;
+    animation: bounce 2s infinite, glow 4s infinite alternate;
+    line-height: 1;
+  }
+
+
+ .scroll-down:hover {
+  transform: scale(1.2);
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+
+  /* ✨ Even stronger glow on hover */
+  box-shadow:
+    0 0 30px #faffcc,
+    0 0 60px #a5b853,
+    inset 0 0 25px rgba(255, 255, 255, 0.3);
 }
 
-.social-icon:hover {
-    color: #a5b853;
+ .scroll-down svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 10px #a5b853) drop-shadow(0 0 15px #faffcc);
+  transition: transform 0.3s ease;
+  display: block;
 }
+
+.scroll-down:hover svg {
+  filter: drop-shadow(0 0 20px #faffcc) drop-shadow(0 0 30px #a5b853);
+}
+
+
+/* Hidden State */
+.scroll-down.hidden,
+.scroll-label.hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  animation: none !important;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 10px #a5b853, 0 0 20px #a5b853; }
+  100% { text-shadow: 0 0 20px #faffcc, 0 0 30px #faffcc; }
+}
+
+@keyframes pulseGlow {
+  0% {
+    text-shadow:
+      0 0 6px #a5b853,
+      0 0 12px #a5b853,
+      0 0 24px #faffcc,
+      0 0 36px #faffcc;
+  }
+  50% {
+    text-shadow:
+      0 0 2px #a5b853,
+      0 0 4px #a5b853,
+      0 0 8px #faffcc,
+      0 0 10px #faffcc;
+  }
+  100% {
+    text-shadow:
+      0 0 6px #a5b853,
+      0 0 12px #a5b853,
+      0 0 24px #faffcc,
+      0 0 36px #faffcc;
+  }
+}
+
 
 /* ------------------- FEATURES SECTION ------------------- */
-/* Features Section Styling */
 .features {
-    padding: 55px 35px;
+    scroll-snap-align: start;
+    position: relative;
+    padding-top: 100px; /* Add this for spacing from top */
+    padding-bottom: 60px;
+    overflow: hidden;
     text-align: center;
-    background-color: #959778;
 }
 
-/* Features Section Heading */
+.features::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    transform-origin: center;
+    transition: transform 0.1s ease-out;
+    z-index: -1;
+    will-change: transform;
+}
+
 .features h2 {
-    font-size: 2.5rem;
-    font-family: 'Quicksand', sans-serif;
+    font-size: 2.8rem;
+    font-family: "Pacifico", cursive;
     margin-bottom: 40px;
-    color: #191c11;
+    color: #d1d7c0;
+    position: relative;
+    z-index: 2;
+    text-align: center;
 }
 
-/* Feature Cards Container */
 .feature-cards {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
 }
 
-/* Feature Card Styling */
 .feature-card {
-    background-color: #191c11;
+    background-color: rgba(92, 96, 69, 0.2);
     padding: 20px;
     border-radius: 8px;
     width: 450px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+    backdrop-filter: blur(6px);
 }
 
-/* Feature Card Heading */
 .feature-card h3 {
     font-size: 1.6rem;
     font-family: 'Quicksand', sans-serif;
@@ -207,19 +355,16 @@ body {
     color: #d1d7c0;
 }
 
-/* Feature Card Paragraph */
 .feature-card p {
     font-size: 1rem;
     font-family: 'Quicksand', sans-serif;
     color: #d1d7c0;
 }
 
-/* Hover Effect for Feature Card */
 .feature-card:hover {
     transform: translateY(-10px);
 }
 
-/* YouTube Thumbnail Styling */
 .youtube-thumbnail {
     width: 100%;
     height: auto;
@@ -227,7 +372,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Donate Button Styling */
 .donate-btn {
     display: inline-block;
     background-color: #5e6244;
@@ -245,42 +389,78 @@ body {
     background-color: #4a4f2f;
 }
 
+@media (max-width: 768px) {
+    .features {
+        background-attachment: scroll;
+        animation: none;
+    }
+
+    .feature-card {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .features h2 {
+        font-size: 1.8rem; /* Smaller, cleaner for mobile */
+        padding: 0 20px;   /* Add side padding to prevent edge collisions */
+        line-height: 1.3;
+      }
+}
+
 /* ------------------- LOGIN AND CONTACT BUTTONS ------------------- */
-/* Button Container for Login, Contact, Shop */
+/* Button Container */
 #login-contact {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    background-color: #5c6045;
-    padding: 50px;
+    background-color: transparent;
+    padding: 20px;
+    flex-wrap: wrap; /* Allows buttons to stack on smaller screens */
 }
 
-/* Button Styling for Login, Contact, Shop */
+/* Button Styling */
 .login-btn, .contact-btn, .shop-btn {
-    background-color: #5e6244;
+    background-color: rgba(92, 96, 69, 0.2);
     color: #d1d7c0;
-    padding: 15px 25px;
+    padding: 15px 20px; /* Consistent padding for all buttons */
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 200px; /* Fixed width for all buttons */
+    height: 50px; /* Fixed height for all buttons */
+    backdrop-filter: blur(6px);
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    min-width: 150px;
+    line-height: 1.2;
 }
 
-/* Hover Effect for Buttons */
+/* Hover Effects */
 .login-btn:hover, .contact-btn:hover, .shop-btn:hover {
-    background-color: #191c11;
+    background-color: #5e6244;
     transform: scale(1.05);
 }
+
+/* Responsive Styling for Smaller Screens */
+@media (max-width: 768px) {
+    .login-btn, .contact-btn, .shop-btn {
+        width: 100%; /* Full width for mobile */
+        max-width: 300px; /* Limit max width to avoid oversized buttons */
+    }
+
+    #login-contact {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 1px; /* Reduce spacing for mobile */
+    }
+}
+
+
 
 /* ------------------- FORM POPUPS ------------------- */
 /* Initial Hidden State for Popups */
@@ -298,14 +478,24 @@ body {
 }
 
 /* Form Container Styling */
-.contact-form-container, .login-form-container {
-    background-color: #959778;
-    padding: 30px;
-    border-radius: 8px;
-    width: 400px;
-    text-align: center;
-    position: relative;
+.contact-form-container,
+.login-form-container {
+  background: rgba(92, 96, 69, 0.25); /* Greenish tint */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+  box-shadow:
+    0 0 20px rgba(165, 184, 83, 0.2),
+    0 0 40px rgba(0, 0, 0, 0.4);
+  color: #d1d7c0;
 }
+
+
 
 /* Form Input/Textarea Styling */
 .contact-form-container input,
@@ -332,25 +522,119 @@ body {
     background-color: #5e6244;
 }
 
-/* Close Button Styling */
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: #333;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;              /* Equal width and height */
+  height: 36px;
+  font-size: 20px;
+  color: #d1d7c0;
+  cursor: pointer;
+  background-color: rgba(165, 184, 83, 0.1);
+  border: none;
+  border-radius: 50%;       /* Ensures perfect circle */
+  backdrop-filter: blur(6px);
+  display: flex;            /* Center icon inside */
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 6px rgba(165, 184, 83, 0.4),
+    0 0 12px rgba(250, 255, 204, 0.1);
 }
 
 .close-btn:hover {
-    color: darkred;
+  animation: softPulse 2s infinite;
+  background-color: rgba(250, 255, 204, 0.1);
+  color: #faffcc;
+  box-shadow:
+    0 0 10px #a5b853,
+    0 0 20px #faffcc;
 }
+
+  @keyframes softPulse {
+      0% { box-shadow: 0 0 6px #a5b853; }
+      50% { box-shadow: 0 0 12px #faffcc; }
+      100% { box-shadow: 0 0 6px #a5b853; }
+    }
+
+
+
+/* Blur effect on background */
+body.blur-active #main-content {
+  filter: blur(8px);
+  transition: filter 0.4s ease;
+  pointer-events: none; /* Optional: Prevent interaction while blurred */
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional dim overlay */
+body.blur-active::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .3); /* Soft dimming */
+  z-index: 0; /* 👈 LOWER than the main content */
+}
+
+
+
+
+/* ------------------- SOCIAL MEDIA SECTION ------------------- */
+/* Social Media Section Styling */
+.social-media {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px; /* not too large */
+    text-align: center;
+    z-index: 1;
+}
+
+.social-media::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: -1;
+}
+
+
+/* Social Media Section Heading */
+.social-media h2 {
+    font-size: 2.5rem;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 40px;
+    color: #191c11;
+}
+
+/* Social Media Icons Styling */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    font-size: 2rem;
+    color: #d1d7c0;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #a5b853;
+}
+
 
 /* ------------------- FOOTER SECTION ------------------- */
 /* Footer Styling */
 .footer {
-    background-color: #191c11;
-    padding: 20px;
+    background-color: transparent;
+    padding-top: 20px;
+    padding-bottom: 10px; /* not too large */
     text-align: center;
     font-family: 'Quicksand', sans-serif;
 }
@@ -432,12 +716,6 @@ body {
     border-color: #1DA1F2;
 }
 
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 /* Button Container */
 .button-container {
@@ -578,9 +856,92 @@ footer {
     display: none;
 }
 
+/* ------------------- RESPONSIVE STYLING ------------------- */
+/* Media Query for iPhones */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+/*    .cta-btn {*/
+/*        font-size: 1rem;*/
+/*        padding: 8px 15px;*/
+/*    }*/
+
+    #login-contact {
+        flex-direction: column; /* Stack buttons vertically */
+    }
+
+    .login-btn, .contact-btn, .shop-btn {
+        width: 80%; /* Full width for buttons */
+        margin: 10px 0;
+    }
+}
 
 
+.success-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: rgba(165, 184, 83, 0.15); /* Soft green tint */
+  border: 1px solid rgba(165, 184, 83, 0.5);
+  border-radius: 16px;
+  padding: 24px 36px;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  color: #d1d7c0;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 12px rgba(165, 184, 83, 0.4),
+    0 0 30px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2000;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.success-animation.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.success-animation .checkmark {
+  font-size: 3rem;
+  color: #a5b853;
+  text-shadow: 0 0 10px #a5b853, 0 0 20px #faffcc;
+  margin-bottom: 12px;
+  animation: pop 0.5s ease-out forwards;
+}
+
+.success-animation p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Optional: pop animation for checkmark */
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 
-
+  @keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+  }
 

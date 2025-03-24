@@ -1,104 +1,269 @@
 // Toggle Background Music Play/Pause
 function playMusic() {
-    var audio = document.getElementById("background-music");
-    var playBtn = document.querySelector(".play-btn");
+    const audio = document.getElementById("background-music");
+    const playBtn = document.querySelector(".play-btn");
 
-    // Check if audio is paused or playing
+    if (!audio || !playBtn) return;
+
     if (audio.paused) {
-        audio.play();  // Play the audio
-        playBtn.classList.add("playing");  // Show the pause icon
+        audio.play().catch((error) => {
+            console.log("User interaction required before playing audio:", error);
+        });
+        playBtn.classList.add("playing");
     } else {
-        audio.pause();  // Pause the audio
-        playBtn.classList.remove("playing");  // Show the play icon
+        audio.pause();
+        playBtn.classList.remove("playing");
     }
 }
 
-// Display Login Form Popup
-function showLoginForm() {
-    document.getElementById('login-form-popup').style.display = 'flex';  // Show the login form popup
+
+// Lock scrolling only if we're at the top of the page
+function shouldLockScroll() {
+  return heroLocked && window.scrollY < window.innerHeight;
 }
 
-// Close Login Form Popup
-function closeLoginForm() {
-    document.getElementById('login-form-popup').style.display = 'none';  // Hide the login form popup
-}
+(function() {
+    emailjs.init("9erwDRBB7eGa9wAV3"); // Your public key
+  })();
 
-// Handle Login Form Submission
-function submitLoginForm(event) {
-    event.preventDefault();  // Prevent the default form submission behavior
+let heroLocked = true;
 
-    // Get form data
-    var username = document.getElementById('login-username').value;
-    var password = document.getElementById('login-password').value;
+document.addEventListener("DOMContentLoaded", () => {
+  // HERO VIDEO fallback
+  const video = document.getElementById("hero-video");
+  if (video) {
+    video.muted = true;
+    video.play().catch(() => {
+      console.log("Autoplay is blocked, showing fallback.");
+      video.style.backgroundImage = "url('fallback-image.jpg')";
+    });
+  }
 
-    // Validate username and password
-    if (username === "natania" && password === "1995") {
-        window.location.href = "twitter-app.html";  // Redirect to another page
+  // Scroll arrow and label
+  const arrow = document.getElementById("scroll-arrow");
+  const label = document.getElementById("scroll-label");
+
+  if (arrow) {
+    arrow.addEventListener("click", () => {
+      heroLocked = false;
+      document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+
+      arrow.classList.add("hidden");
+      if (label) {
+        label.classList.add("hidden");
+      }
+    });
+  }
+
+  // Scroll-lock handler
+  window.addEventListener('wheel', (e) => {
+    if (heroLocked && window.scrollY < window.innerHeight) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, { passive: false });
+
+  // Scroll-based video zoom
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const triggerPoint = window.innerHeight / 2;
+
+    if (scrollY > triggerPoint) {
+      const progress = (scrollY - triggerPoint) / (document.body.scrollHeight - window.innerHeight - triggerPoint);
+      const clamped = Math.min(Math.max(progress, 0), 1);
+      const scale = 1 + clamped * 0.5;
+      document.documentElement.style.setProperty('--video-zoom', scale);
     } else {
-        alert("Incorrect username or password!");  // Show error message
+      document.documentElement.style.setProperty('--video-zoom', 1);
     }
-}
+  });
 
 
-
-// Open Contact Form Popup
-function openContactForm() {
-    // Show the contact form by changing its display property to flex (centered)
-    document.getElementById('contact-form-popup').style.display = 'flex';
-}
-
-// Close Contact Form Popup
-function closeContactForm() {
-    // Hide the contact form by setting display to none
-    document.getElementById('contact-form-popup').style.display = 'none';
-}
-
-// Handle Contact Form Submission
-function submitContactForm(event) {
-    event.preventDefault();  // Prevent the default form submission behavior to keep the popup open
-
-    // Get form data
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    var message = document.getElementById('message').value;
-
-    // Display a thank you message and close the form
-    alert("Thank you for reaching out, " + name + "! We have received your message and will get back to you soon.");
-
-    // You can also process the data or send it to a server here if needed
-
-    // Close the contact form after submission
-    closeContactForm();
-}
+    // Scroll-to helper
+    window.scrollToSection = function (id) {
+        const section = document.getElementById(id);
+        if (section) section.scrollIntoView({ behavior: "smooth" });
+    };
 
 
 
 
-
-document.getElementById("post-input").addEventListener("keydown", function(event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();  // Prevent the default Enter action (like submitting the form)
-        postMessage();           // Trigger the post function
+    // POST SYSTEM & INTERACTIONS
+    const postInput = document.getElementById("post-input");
+    if (postInput) {
+        postInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                postMessage();
+            }
+        });
     }
+
+    const photoUploadInput = document.getElementById('photo-upload');
+    const imagePreviewContainer = document.getElementById('image-preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const postButton = document.getElementById('post-button');
+    const usernameInput = document.getElementById('username');
+    const postsContainer = document.getElementById('posts-container');
+
+    if (photoUploadInput) {
+        photoUploadInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    if (imagePreview) {
+                        imagePreview.src = event.target.result;
+                        imagePreviewContainer.style.display = 'block';
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (postButton) {
+        postButton.addEventListener('click', function () {
+            const username = usernameInput.value.trim();
+            const postText = postInput.value.trim();
+
+            if (username === "" || postText === "") {
+                alert("Please fill in both your name and the post content.");
+                return;
+            }
+
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+
+            postElement.innerHTML = `
+                <div class="post-header">
+                    <span class="post-username">${username}</span>
+                </div>
+                <div class="post-text">${postText}</div>
+            `;
+
+            if (imagePreview && imagePreview.src) {
+                const imageElement = document.createElement('img');
+                imageElement.src = imagePreview.src;
+                imageElement.classList.add('image-preview');
+                postElement.appendChild(imageElement);
+            }
+
+            postsContainer.prepend(postElement);
+
+            usernameInput.value = '';
+            postInput.value = '';
+            imagePreviewContainer.style.display = 'none';
+            if (imagePreview) imagePreview.src = '';
+        });
+    }
+
+    const scrollBackground = document.getElementById("scroll-background");
+    if (scrollBackground && window.innerWidth <= 768) {
+        scrollBackground.style.animation = "none";
+        scrollBackground.style.backgroundAttachment = "scroll";
+    }
+
+    loadPosts();
 });
 
-// Function to post a new message
+// ==============================
+// Popup Forms
+// ==============================
+function showLoginForm() {
+  const loginPopup = document.getElementById('login-form-popup');
+  if (loginPopup) {
+    loginPopup.style.display = 'flex';
+    document.body.classList.add('blur-active');
+    document.body.classList.add("noscroll");
+
+  }
+}
+
+function closeLoginForm() {
+  const loginPopup = document.getElementById('login-form-popup');
+  if (loginPopup) loginPopup.style.display = 'none';
+  document.body.classList.remove('blur-active');
+  document.body.classList.remove("noscroll");
+
+}
+function submitLoginForm(event) {
+    event.preventDefault();
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    if (username === "natania" && password === "1995") {
+        window.location.href = "twitter-app.html";
+    } else {
+        alert("Incorrect username or password!");
+    }
+}
+
+function openContactForm() {
+  const contactPopup = document.getElementById('contact-form-popup');
+  if (contactPopup) {
+    contactPopup.style.display = 'flex';
+    document.body.classList.add('blur-active', 'noscroll');
+  }
+}
+
+function closeContactForm() {
+  const contactPopup = document.getElementById('contact-form-popup');
+  if (contactPopup) contactPopup.style.display = 'none';
+  document.body.classList.remove('blur-active', 'noscroll');
+}
+
+function submitContactForm(event) {
+  event.preventDefault();
+
+  emailjs.sendForm("service_9g98ue4", "template_pee5gbh", "#contact-form")
+    .then(() => {
+      const animation = document.getElementById("success-animation");
+      if (animation) {
+        animation.classList.remove("hidden");
+        animation.classList.add("active");
+
+        setTimeout(() => {
+          animation.classList.remove("active");
+          animation.classList.add("hidden");
+          closeContactForm();
+        }, 2000);
+      }
+
+      document.getElementById("contact-form").reset();
+    }, (error) => {
+      console.error("FAILED...", error);
+      alert("Oops! Something went wrong.");
+    });
+}
+
+// ✅ Setup on page load
+document.addEventListener("DOMContentLoaded", () => {
+  emailjs.init("9erwDRBB7eGa9wAV3");
+
+  const form = document.getElementById("contact-form");
+  if (form) {
+    form.addEventListener("submit", submitContactForm);
+  }
+});
+
+
+// ==============================
+// Post + LocalStorage Logic
+// ==============================
 function postMessage() {
     const postContent = document.getElementById("post-input").value.trim();
     const username = document.getElementById("username").value.trim();
     const photoUpload = document.getElementById("photo-upload");
     const imagePreviewContainer = document.getElementById("image-preview-container");
 
-    // Get the current date and time
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString(); // Format to "MM/DD/YYYY, HH:MM AM/PM"
+    const formattedDate = currentDate.toLocaleString();
 
     if (postContent && username) {
-        // Create the new post element
         const postElement = document.createElement("div");
         postElement.classList.add("post");
 
-        // Create the post header with the username and timestamp
         const postHeader = document.createElement("div");
         postHeader.classList.add("post-header");
 
@@ -112,12 +277,10 @@ function postMessage() {
 
         postHeader.append(postUsername, postTime);
 
-        // Create the post content (text the user entered)
         const postText = document.createElement("p");
         postText.classList.add("post-text");
         postText.textContent = postContent;
 
-        // If there's an image, add it to the post
         if (imagePreviewContainer.children.length > 0) {
             const image = imagePreviewContainer.querySelector('img');
             const imageElement = document.createElement('img');
@@ -126,26 +289,19 @@ function postMessage() {
             postElement.appendChild(imageElement);
         }
 
-        // Append the header and text to the post element
         postElement.append(postHeader, postText);
-
-        // Add the post to the top of the posts container
         document.getElementById("posts-container").prepend(postElement);
-
-        // Save the post to localStorage
         savePosts();
 
-        // Clear the input fields
         document.getElementById("post-input").value = "";
         document.getElementById("username").value = "";
-        document.getElementById("image-preview-container").innerHTML = ""; // Clear image preview
-        photoUpload.value = ''; // Reset the file input
+        document.getElementById("image-preview-container").innerHTML = "";
+        photoUpload.value = '';
     } else {
         alert("Please fill in both username and post content.");
     }
 }
 
-// Function to save posts to localStorage
 function savePosts() {
     const posts = document.querySelectorAll(".post");
     const postsArray = Array.from(posts).map(post => {
@@ -157,10 +313,9 @@ function savePosts() {
         };
     });
 
-    localStorage.setItem("posts", JSON.stringify(postsArray)); // Save posts as JSON in localStorage
+    localStorage.setItem("posts", JSON.stringify(postsArray));
 }
 
-// Function to load posts from localStorage
 function loadPosts() {
     const posts = JSON.parse(localStorage.getItem("posts"));
     if (posts) {
@@ -168,7 +323,6 @@ function loadPosts() {
             const postElement = document.createElement("div");
             postElement.classList.add("post");
 
-            // Create post header with username and timestamp
             const postHeader = document.createElement("div");
             postHeader.classList.add("post-header");
 
@@ -182,12 +336,10 @@ function loadPosts() {
 
             postHeader.append(postUsername, postTime);
 
-            // Create post content
             const postText = document.createElement("p");
             postText.classList.add("post-text");
             postText.textContent = post.content;
 
-            // If there's an image, include it
             if (post.image) {
                 const postImage = document.createElement("img");
                 postImage.classList.add('post-image');
@@ -195,96 +347,8 @@ function loadPosts() {
                 postElement.appendChild(postImage);
             }
 
-            // Append header and text to the post element
             postElement.append(postHeader, postText);
-
-            // Add the post to the top of the posts container
             document.getElementById("posts-container").prepend(postElement);
         });
     }
 }
-
-// Load posts when the page loads
-window.onload = loadPosts;
-
-// Listen for file input changes
-document.getElementById('photo-upload').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const img = document.createElement('img');
-            img.src = event.target.result;
-            img.classList.add('image-preview');
-            document.getElementById('image-preview-container').innerHTML = ''; // Clear previous preview
-            document.getElementById('image-preview-container').appendChild(img); // Append image preview
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// JavaScript for handling image preview and posting functionality
-
-// Get references to elements
-const photoUploadInput = document.getElementById('photo-upload');
-const imagePreviewContainer = document.getElementById('image-preview-container');
-const imagePreview = document.getElementById('image-preview');
-const postButton = document.getElementById('post-button');
-const usernameInput = document.getElementById('username');
-const postInput = document.getElementById('post-input');
-const postsContainer = document.getElementById('posts-container');
-
-// Handle file input (image upload)
-photoUploadInput.addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Show the image preview
-            imagePreview.src = e.target.result;
-            imagePreviewContainer.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Handle post button click
-postButton.addEventListener('click', function() {
-    const username = usernameInput.value.trim();
-    const postText = postInput.value.trim();
-
-    if (username === "" || postText === "") {
-        alert("Please fill in both your name and the post content.");
-        return;
-    }
-
-    // Create a new post element
-    const postElement = document.createElement('div');
-    postElement.classList.add('post');
-
-    // Add username and post text
-    postElement.innerHTML = `
-        <div class="post-header">
-            <span class="post-username">${username}</span>
-        </div>
-        <div class="post-text">${postText}</div>
-    `;
-
-    // Check if there's an image to add to the post
-    if (imagePreview.src) {
-        const imageElement = document.createElement('img');
-        imageElement.src = imagePreview.src;
-        imageElement.classList.add('image-preview');
-        postElement.appendChild(imageElement);
-    }
-
-    // Add the new post to the posts container
-    postsContainer.prepend(postElement);
-
-    // Reset form and preview
-    usernameInput.value = '';
-    postInput.value = '';
-    imagePreviewContainer.style.display = 'none';
-    imagePreview.src = ''; // Reset image preview
-});
-
