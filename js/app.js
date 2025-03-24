@@ -68,6 +68,19 @@ if (window.innerWidth <= 768) {
 }
 window.addEventListener('wheel', handleScrollLock, { passive: false }); // always for desktop
 
+function adjustHeroHeight() {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.style.height = `${window.innerHeight}px`;
+    }
+  }
+
+  // Only apply on mobile
+  if (window.innerWidth <= 768) {
+    window.addEventListener('DOMContentLoaded', adjustHeroHeight);
+    window.addEventListener('resize', adjustHeroHeight);
+  }
+  
 
   // Scroll-based video zoom
   window.addEventListener('scroll', () => {
