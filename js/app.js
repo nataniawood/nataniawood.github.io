@@ -44,16 +44,45 @@ document.addEventListener("DOMContentLoaded", () => {
   const label = document.getElementById("scroll-label");
 
   if (arrow) {
-    arrow.addEventListener("click", () => {
-      heroLocked = false;
-      document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+  arrow.addEventListener("click", () => {
+    heroLocked = false;
 
-      arrow.classList.add("hidden");
-      if (label) {
-        label.classList.add("hidden");
-      }
-    });
-  }
+    arrow.classList.add("hidden");
+    label?.classList.add("hidden");
+
+    const target = document.getElementById('features');
+
+    // ✅ Enhanced smooth scroll only on mobile
+    if (window.innerWidth <= 768) {
+      // Temporarily disable scroll snap for smoother iOS scroll
+      try {
+  document.documentElement.style.scrollSnapType = "none";
+  document.body.style.scrollSnapType = "none";
+} catch (err) {
+  console.warn("Scroll snap toggle failed", err);
+}
+
+      // Delay to allow layout to settle
+      setTimeout(() => {
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Re-enable scroll snap after scrolling finishes
+        setTimeout(() => {
+          try {
+  document.documentElement.style.scrollSnapType = "y mandatory";
+  document.body.style.scrollSnapType = "y mandatory";
+          } catch (err) {
+              console.warn("Scroll snap restore failed", err);
+          }
+        }, 600);
+      }, 50);
+    } else {
+      // ✅ Normal behavior for desktop (no scroll snap changes)
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
+
 
   // ✅ Unified scroll-lock handler
 function handleScrollLock(e) {
@@ -63,9 +92,12 @@ function handleScrollLock(e) {
   }
 }
 
-if (window.innerWidth <= 768) {
-  window.addEventListener('touchmove', handleScrollLock, { passive: false });
+if ('ontouchstart' in window && window.innerWidth <= 768) {
+  setTimeout(() => {
+    window.addEventListener('touchmove', handleScrollLock, { passive: false });
+  }, 100); // delay to avoid crash on early layout
 }
+
 window.addEventListener('wheel', handleScrollLock, { passive: false }); // always for desktop
 
 function adjustHeroHeight() {
@@ -83,19 +115,24 @@ function adjustHeroHeight() {
   
 
   // Scroll-based video zoom
-  window.addEventListener('scroll', () => {
+  let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
     const scrollY = window.scrollY;
     const triggerPoint = window.innerHeight / 2;
 
     if (scrollY > triggerPoint) {
       const progress = (scrollY - triggerPoint) / (document.body.scrollHeight - window.innerHeight - triggerPoint);
       const clamped = Math.min(Math.max(progress, 0), 1);
-      const scale = 1 + clamped * 0.5;
-      document.documentElement.style.setProperty('--video-zoom', scale);
-    } else {
-      document.documentElement.style.setProperty('--video-zoom', 1);
-    }
+        const scale = 1 + clamped * 0.5;
+        document.documentElement.style.setProperty('--video-zoom', scale);
+      } else {
+        document.documentElement.style.setProperty('--video-zoom', 1);
+      }
+    }, 10); // 10ms throttle
   });
+
 
 
     // Scroll-to helper
