@@ -486,7 +486,10 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 30px;
   border-radius: 16px;
-  width: 400px;
+  width: 90%;
+  max-width: 400px; /* Keep a nice limit on large screens */
+  max-height: 90vh; /* Prevent it from spilling off small screens */
+  overflow-y: auto; /* Scroll if content exceeds height */
   text-align: center;
   position: relative;
   box-shadow:
@@ -867,11 +870,6 @@ footer {
         font-size: 1.2rem;
     }
 
-/*    .cta-btn {*/
-/*        font-size: 1rem;*/
-/*        padding: 8px 15px;*/
-/*    }*/
-
     #login-contact {
         flex-direction: column; /* Stack buttons vertically */
     }
@@ -880,50 +878,72 @@ footer {
         width: 80%; /* Full width for buttons */
         margin: 10px 0;
     }
+
+
+    .contact-form-container input,
+    .contact-form-container textarea,
+    .login-form-container input {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .submit-btn {
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+
+    .contact-form-container,
+    .login-form-container {
+        padding: 24px;
+    }
+
 }
 
-
 .success-animation {
-  position: absolute;
+  position: fixed; /* Changed from absolute so it floats over all content */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.9);
-  background: rgba(165, 184, 83, 0.15); /* Soft green tint */
-  border: 1px solid rgba(165, 184, 83, 0.5);
+  background-color: #a5b853;
   border-radius: 16px;
-  padding: 24px 36px;
+  padding: 28px 40px;
   text-align: center;
   font-family: 'Quicksand', sans-serif;
-  color: #d1d7c0;
-  backdrop-filter: blur(10px);
+  color: #ffffff;
   box-shadow:
-    0 0 12px rgba(165, 184, 83, 0.4),
-    0 0 30px rgba(0, 0, 0, 0.2);
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 60px rgba(165, 184, 83, 0.4);
   opacity: 0;
   pointer-events: none;
-  z-index: 2000;
+  z-index: -1; /* hide from stacking when inactive */
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
+
 
 .success-animation.active {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+  z-index: 3000; /* higher than form popup */
 }
 
 .success-animation .checkmark {
-  font-size: 3rem;
-  color: #a5b853;
-  text-shadow: 0 0 10px #a5b853, 0 0 20px #faffcc;
-  margin-bottom: 12px;
+  font-size: 3.5rem;
+  color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.3),
+    0 0 18px rgba(255, 255, 255, 0.2);
+  margin-bottom: 14px;
   animation: pop 0.5s ease-out forwards;
 }
 
 .success-animation p {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin: 0;
+  font-weight: 500;
 }
 
-/* Optional: pop animation for checkmark */
+/* Pop animation for checkmark */
 @keyframes pop {
   0% {
     transform: scale(0.5);
@@ -937,11 +957,4 @@ footer {
     transform: scale(1);
   }
 }
-
-
-  @keyframes pop {
-    0% { transform: scale(0); opacity: 0; }
-    60% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(1); }
-  }
 

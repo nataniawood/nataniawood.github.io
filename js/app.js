@@ -216,26 +216,36 @@ function closeContactForm() {
 function submitContactForm(event) {
   event.preventDefault();
 
-  emailjs.sendForm("service_9g98ue4", "template_pee5gbh", "#contact-form")
+  const form = document.getElementById("contact-form");
+
+  // Send email to YOU
+  emailjs.sendForm("service_9g98ue4", "template_g5n2ytd", form)
     .then(() => {
-      const animation = document.getElementById("success-animation");
-      if (animation) {
-        animation.classList.remove("hidden");
-        animation.classList.add("active");
+      // Then send auto-reply to the user
+      emailjs.sendForm("service_9g98ue4", "template_pee5gbh", form)
+        .then(() => {
+          const animation = document.getElementById("success-animation");
+          if (animation) {
+            animation.classList.remove("hidden");
+            animation.classList.add("active");
 
-        setTimeout(() => {
-          animation.classList.remove("active");
-          animation.classList.add("hidden");
-          closeContactForm();
-        }, 2000);
-      }
+            setTimeout(() => {
+              animation.classList.remove("active");
+              animation.classList.add("hidden");
+              closeContactForm();
+            }, 2000);
+          }
 
-      document.getElementById("contact-form").reset();
+          form.reset();
+        }, (error) => {
+          console.error("Auto-reply failed:", error);
+        });
     }, (error) => {
-      console.error("FAILED...", error);
+      console.error("Form submission failed:", error);
       alert("Oops! Something went wrong.");
     });
 }
+
 
 // ✅ Setup on page load
 document.addEventListener("DOMContentLoaded", () => {
