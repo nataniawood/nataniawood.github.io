@@ -55,13 +55,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Scroll-lock handler
-  window.addEventListener('wheel', (e) => {
-    if (heroLocked && window.scrollY < window.innerHeight) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, { passive: false });
+  // ✅ Unified scroll-lock handler
+function handleScrollLock(e) {
+  if (heroLocked && window.scrollY < window.innerHeight) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
+
+if (window.innerWidth <= 768) {
+  window.addEventListener('touchmove', handleScrollLock, { passive: false });
+}
+window.addEventListener('wheel', handleScrollLock, { passive: false }); // always for desktop
+
 
   // Scroll-based video zoom
   window.addEventListener('scroll', () => {
