@@ -184,115 +184,89 @@ section {
   animation: pulseGlow 2.5s ease-in-out infinite;
   font-family: 'Quicksand', sans-serif;
   transition: opacity 0.5s ease;
-  background-color: rgba(0, 0, 0, 0.08);
-  border-radius: 30px;
-  padding: 8px 16px;
-  backdrop-filter: blur(10px);
-  display: block;
+/*  background-color: rgba(0, 0, 0, 0.08);*/
+/*  border-radius: 30px;*/
+/*  padding: 8px 16px;*/
+/*  backdrop-filter: blur(0px);*/
+/*  display: block;*/
   text-shadow: 0 0 6px #a5b853, 0 0 12px #faffcc;
 }
 
 
 
 .scroll-down {
-    font-family: 'Quicksand', sans-serif;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.03);
-    color: #d1d7c0;
-    cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+  border: none;
+  cursor: pointer;
 
-    /* Circle shape */
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+  /* Circle */
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    font-size: 2rem;
-    opacity: 0.95;
-    backdrop-filter: blur(8px);
+  font-size: 2rem;
+  color: #faffcc;
+  position: relative;
 
-    /* 💡 Brighter base glow */
-    box-shadow:
-      0 0 20px rgba(165, 184, 83, 0.8),
-      0 0 40px rgba(165, 184, 83, 0.6),
-      inset 0 0 20px rgba(165, 184, 83, 0.4);
-
-    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.4s ease;
-    animation: bounce 2s infinite, glow 4s infinite alternate;
-    line-height: 1;
-  }
-
-
- .scroll-down:hover {
-  transform: scale(1.2);
-  opacity: 1;
-  background-color: rgba(255, 255, 255, 0.1);
-
-  /* ✨ Even stronger glow on hover */
+  /* ✨ New gradient + glassmorphism background */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.01)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow:
-    0 0 30px #faffcc,
-    0 0 60px #a5b853,
-    inset 0 0 25px rgba(255, 255, 255, 0.3);
+    0 0 15px rgba(165, 184, 83, 0.3),
+    0 0 40px rgba(165, 184, 83, 0.1),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
+
+  transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.4s ease;
+  animation: bounce 2s infinite;
+  z-index: 2;
 }
 
- .scroll-down svg {
+.scroll-down::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(250, 255, 204, 0.3) 0%,
+    transparent 70%
+  );
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-down:hover {
+  transform: scale(1.15);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  box-shadow:
+    0 0 25px #faffcc,
+    0 0 50px #a5b853,
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.scroll-down svg {
   width: 24px;
   height: 24px;
-  filter: drop-shadow(0 0 10px #a5b853) drop-shadow(0 0 15px #faffcc);
+  filter: drop-shadow(0 0 6px #a5b853) drop-shadow(0 0 12px #faffcc);
   transition: transform 0.3s ease;
-  display: block;
 }
 
 .scroll-down:hover svg {
-  filter: drop-shadow(0 0 20px #faffcc) drop-shadow(0 0 30px #a5b853);
-}
-
-
-/* Hidden State */
-.scroll-down.hidden,
-.scroll-label.hidden {
-  opacity: 0 !important;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  animation: none !important;
-}
-
-/* Animations */
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-
-@keyframes glow {
-  0% { text-shadow: 0 0 10px #a5b853, 0 0 20px #a5b853; }
-  100% { text-shadow: 0 0 20px #faffcc, 0 0 30px #faffcc; }
-}
-
-@keyframes pulseGlow {
-  0% {
-    text-shadow:
-      0 0 6px #a5b853,
-      0 0 12px #a5b853,
-      0 0 24px #faffcc,
-      0 0 36px #faffcc;
-  }
-  50% {
-    text-shadow:
-      0 0 2px #a5b853,
-      0 0 4px #a5b853,
-      0 0 8px #faffcc,
-      0 0 10px #faffcc;
-  }
-  100% {
-    text-shadow:
-      0 0 6px #a5b853,
-      0 0 12px #a5b853,
-      0 0 24px #faffcc,
-      0 0 36px #faffcc;
-  }
+  transform: translateY(2px);
+  filter: drop-shadow(0 0 12px #faffcc) drop-shadow(0 0 24px #a5b853);
 }
 
 
@@ -505,12 +479,9 @@ section {
   }
 }
 
-     body.blur-active {
-  scroll-snap-type: none !important;
-  overflow: hidden !important;
-  overscroll-behavior: none;
-}
-
+      body.blur-active {
+          scroll-snap-type: none !important
+      }
 
       html.blur-active {
   scroll-snap-type: none !important;
