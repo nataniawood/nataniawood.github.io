@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAr_Y7ZbXCPH--Oe3j8l2Zg0RCmAkV8iBk",
   authDomain: "natania-9a7c1.firebaseapp.com",
   projectId: "natania-9a7c1",
-  storageBucket: "natania-9a7c1.appspot.com",
+  storageBucket: "gs://natania-9a7c1.firebasestorage.app",
   messagingSenderId: "1051121387245",
   appId: "1:1051121387245:web:d3bef085cee8aa29af2ee4",
   measurementId: "G-1X0QJT74QT"
