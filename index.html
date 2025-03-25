@@ -130,12 +130,13 @@
     </div>
   </section>
 
-  <!-- Login / Contact / Shop -->
-  <section id="login-contact" class="login-contact">
-    <button class="login-btn" onclick="showLoginForm()">Portfolio</button>
-    <a href="https://configurator.porsche.com/en-US/model/992850/" target="_blank" class="shop-btn">Shop</a>
-    <button class="contact-btn" onclick="openContactForm()">Contact</button>
-  </section>
+ <!-- Login / Contact / Shop -->
+<section id="login-contact" class="login-contact">
+  <button id="login-btn" class="login-btn">Portfolio</button>
+  <a href="https://configurator.porsche.com/en-US/model/992850/" target="_blank" class="shop-btn">Shop</a>
+  <button id="contact-btn" class="contact-btn">Contact</button>
+</section>
+
 
   </div>
 
@@ -167,12 +168,19 @@
   <div id="login-form-popup" class="login-form-popup">
     <div class="login-form-container">
       <span class="close-btn" onclick="closeLoginForm()">&times;</span>
-      <h2 class="form-title">Login</h2>
+      <h2 class="form-title">Portfolio Access</h2>
       <form id="login-form" onsubmit="submitLoginForm(event)">
-        <input type="text" id="login-username" name="username" placeholder="Username" required />
-        <input type="password" id="login-password" name="password" placeholder="Password" required />
-        <button type="submit" class="submit-btn">Login</button>
+  <input type="text" id="login-username" name="username" placeholder="Email" required />
+  <input type="password" id="login-password" name="password" placeholder="Password" required />
+
+  <button type="submit" class="submit-btn">Login</button>
+  <p class="signup-line">
+  Don’t have an account?
+  <a href="#" id="signup-btn" class="signup-link">Sign up</a>
+</p>
+
       </form>
+
     </div>
   </div>
 
@@ -195,7 +203,7 @@
   </footer>
 
   <!-- Main Script -->
-  <script src="js/app.js"></script>
+  <script type="module" src="js/app.js"></script>
 
 </body>
 </html>

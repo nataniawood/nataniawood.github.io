@@ -10,9 +10,12 @@
     gtag('config', 'G-90NKLB4SSX');
   </script>
 
+  <link rel="icon" href="assets/images/site-preview.png" type="image/png">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Photo Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 
   <style>
@@ -66,11 +69,13 @@
   </header>
 
   <section class="upload-section">
-    <label for="photo-upload" class="upload-trigger">
-      Upload <span class="arrow">➜</span>
-    </label>
-    <input type="file" id="photo-upload" accept="image/*" />
+  <label for="photo-upload" class="upload-trigger">
+    Select Image <span class="arrow">➜</span>
+  </label>
+  <input type="file" id="photo-upload" accept="image/*" />
+  <button id="upload-btn" style="display:none;">Upload</button>
   </section>
+
 
   <main class="photo-grid" id="photo-grid"></main>
 

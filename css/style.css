@@ -91,14 +91,14 @@ body.noscroll {
     font-size: 4rem;
     font-family: "Pacifico", cursive;
     margin-bottom: 15px;
-    text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, .8);
 }
 
 .hero-content p {
     font-size: 1.5rem;
     font-family: 'Quicksand', sans-serif;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
 }
 
 .play-btn {
@@ -481,13 +481,13 @@ section {
 @media (max-width: 768px) {
   .contact-form-popup,
   .login-form-popup {
+      display: none !important; /* 👈 FIX: prevent showing on load */
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -638,6 +638,29 @@ body.blur-active::before {
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
   }
 
+  .signup-line {
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  margin-top: 25px;
+  color: #d1d7c0;
+}
+
+.signup-link {
+  display: inline-block; /* Makes it fully clickable */
+  font-weight: bold;
+  margin-left: 6px;
+  color: #faffcc;
+  cursor: pointer;
+  text-decoration: none;
+  text-shadow: 0 0 6px #a5b853, 0 0 12px #faffcc;
+  transition: text-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.signup-link:hover {
+  text-shadow: 0 0 12px #faffcc, 0 0 24px #a5b853;
+  transform: scale(1.05);
+}
 
 
 /* ------------------- SOCIAL MEDIA SECTION ------------------- */
@@ -704,33 +727,44 @@ body.blur-active::before {
 }
 
 
+/* Portfolio Styling */
+
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background: #f8f9fa;
   color: #333;
 }
 
 .portfolio-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* stack heading and button */
   align-items: center;
   padding: 20px;
   background: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
 
 .portfolio-header h1 {
-  font-size: 1.8rem;
-  margin: 0;
+  font-size: 2.8rem;
+  font-family: 'Pacifico', cursive;
+  margin: 0 0 12px;
+  color: #000;
 }
 
 .home-btn {
   background: none;
   border: none;
-  color: #0077cc;
+  color: #a5b853;
   font-size: 1rem;
   cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.home-btn:hover {
+  color: #333;
 }
 
 .upload-section {
@@ -741,24 +775,27 @@ body {
 .upload-trigger {
   display: inline-block;
   background: #ffffff;
-  color: #0077cc;
-  border: 2px dashed #cce4f6;
+  color: #a5b853;
+  border: 2px dashed #a5b853;
   padding: 14px 28px;
   font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .upload-trigger:hover {
-  background: #eef9ff;
-  border-color: #0077cc;
+  background: #faffcc;
+  border-color: #a5b853;
+  color: #333;
 }
 
 .arrow {
   margin-left: 8px;
   font-weight: bold;
 }
+
 
 /* Hide file input */
 #photo-upload {
@@ -820,6 +857,21 @@ body {
     .login-form-container {
         padding: 24px;
     }
+
+    .portfolio-header h1 {
+        font-size: 2rem;
+      }
+
+      .upload-trigger {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        padding: 10px;
+        gap: 10px;
+      }
 
 }
 
