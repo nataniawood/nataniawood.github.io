@@ -1,7 +1,7 @@
+// ✅ Firebase & Auth Setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// ✅ Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyAr_Y7ZbXCPH--Oe3j8l2Zg0RCmAkV8iBk",
   authDomain: "natania-9a7c1.firebaseapp.com",
@@ -15,7 +15,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ✅ Login Form Auth
+// ✅ Scroll Lock State
+window.heroLocked = true;
+
+// ✅ Login
 function submitLoginForm(e) {
   e.preventDefault();
   const email = document.getElementById('login-username').value;
@@ -26,115 +29,20 @@ function submitLoginForm(e) {
     .catch(err => alert("Login failed: " + err.message));
 }
 
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
 function submitSignUp() {
   const email = document.getElementById('login-username').value;
   const password = document.getElementById('login-password').value;
-
   if (!email || !password) {
     alert("Please enter email and password.");
     return;
   }
 
   createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      alert("Sign-up successful! You can now log in.");
-      // Optionally log in automatically:
-      // window.location.href = "portfolio.html";
-    })
-    .catch((err) => {
-      alert("Sign-up failed: " + err.message);
-    });
+    .then(() => alert("Sign-up successful! You can now log in."))
+    .catch(err => alert("Sign-up failed: " + err.message));
 }
 
-
-// ✅ Toggle Music
-function playMusic() {
-  const audio = document.getElementById("background-music");
-  const playBtn = document.querySelector(".play-btn");
-  if (!audio || !playBtn) return;
-
-  if (audio.paused) {
-    audio.play().catch(err => console.error("Audio error:", err));
-    playBtn.classList.add("playing");
-  } else {
-    audio.pause();
-    playBtn.classList.remove("playing");
-  }
-}
-
-// ✅ Scroll Lock Logic
-window.heroLocked = true;
-
-function shouldLockScroll() {
-  return window.heroLocked && window.scrollY < window.innerHeight;
-}
-
-function handleScrollLock(e) {
-  if (shouldLockScroll()) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-}
-
-// ✅ Scroll-to-Features (Unlock + Smooth Scroll)
-function scrollToFeatures() {
-  window.heroLocked = false;
-  document.body.classList.remove("noscroll");
-
-  const target = document.getElementById("features");
-  const arrow = document.getElementById("scroll-arrow");
-  const label = document.getElementById("scroll-label");
-
-  arrow?.classList.add("hidden");
-  label?.classList.add("hidden");
-
-  if (window.innerWidth <= 768) {
-    document.documentElement.style.scrollSnapType = "none";
-    document.body.style.scrollSnapType = "none";
-
-    setTimeout(() => {
-      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => {
-        document.documentElement.style.scrollSnapType = "y mandatory";
-        document.body.style.scrollSnapType = "y mandatory";
-      }, 600);
-    }, 50);
-  } else {
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-// ✅ Scroll-Based Video Zoom
-function setupVideoZoom() {
-  let ticking = false;
-
-  function updateZoom() {
-    const scrollY = window.scrollY;
-    const trigger = window.innerHeight / 2;
-
-    if (!window.heroLocked && scrollY > trigger) {
-      const progress = (scrollY - trigger) / (document.body.scrollHeight - window.innerHeight - trigger);
-      const clamped = Math.min(Math.max(progress, 0), 1);
-      const scale = 1 + clamped * 0.5;
-      document.documentElement.style.setProperty('--video-zoom', scale);
-    } else {
-      document.documentElement.style.setProperty('--video-zoom', 1);
-    }
-
-    ticking = false;
-  }
-
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(updateZoom);
-    }
-  });
-}
-
-// ✅ Contact Form
+// ✅ Contact Form Submit
 function submitContactForm(e) {
   e.preventDefault();
   const form = document.getElementById("contact-form");
@@ -159,19 +67,90 @@ function submitContactForm(e) {
   });
 }
 
-// ✅ Popup Helpers
+// ✅ Music Toggle
+function playMusic() {
+  const audio = document.getElementById("background-music");
+  const playBtn = document.querySelector(".play-btn");
+  if (!audio || !playBtn) return;
+
+  if (audio.paused) {
+    audio.play().catch(err => console.error("Audio error:", err));
+    playBtn.classList.add("playing");
+  } else {
+    audio.pause();
+    playBtn.classList.remove("playing");
+  }
+}
+
+// ✅ Scroll Lock Logic
+function shouldLockScroll() {
+  return window.heroLocked && window.scrollY < window.innerHeight;
+}
+
+function handleScrollLock(e) {
+  if (shouldLockScroll()) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
+
+function scrollToFeatures() {
+  window.heroLocked = false;
+  document.body.classList.remove("noscroll");
+  const target = document.getElementById("features");
+  const arrow = document.getElementById("scroll-arrow");
+  const label = document.getElementById("scroll-label");
+  arrow?.classList.add("hidden");
+  label?.classList.add("hidden");
+
+  if (window.innerWidth <= 768) {
+    document.documentElement.style.scrollSnapType = "none";
+    document.body.style.scrollSnapType = "none";
+    setTimeout(() => {
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        document.documentElement.style.scrollSnapType = "y mandatory";
+        document.body.style.scrollSnapType = "y mandatory";
+      }, 600);
+    }, 50);
+  } else {
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ✅ Scroll-Based Video Zoom
+function setupVideoZoom() {
+  let ticking = false;
+  function updateZoom() {
+    const scrollY = window.scrollY;
+    const trigger = window.innerHeight / 2;
+    if (!window.heroLocked && scrollY > trigger) {
+      const progress = (scrollY - trigger) / (document.body.scrollHeight - window.innerHeight - trigger);
+      const clamped = Math.min(Math.max(progress, 0), 1);
+      const scale = 1 + clamped * 0.5;
+      document.documentElement.style.setProperty('--video-zoom', scale);
+    } else {
+      document.documentElement.style.setProperty('--video-zoom', 1);
+    }
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateZoom);
+    }
+  });
+}
+
+// ✅ Popup Logic
 function showLoginForm() {
   const popup = document.getElementById('login-form-popup');
   popup?.classList.remove("hidden");
   popup.style.display = 'flex';
   document.body.classList.add('blur-active');
-  if (!/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-  if (document.getElementById("login-form-popup")?.style.display === "flex" ||
-      document.getElementById("contact-form-popup")?.style.display === "flex") {
-    document.body.classList.add("noscroll");
-  }
+  document.body.classList.add("noscroll");
 }
-
 
 function closeLoginForm() {
   const popup = document.getElementById('login-form-popup');
@@ -185,9 +164,7 @@ function openContactForm() {
   popup?.classList.remove("hidden");
   popup.style.display = 'flex';
   document.body.classList.add('blur-active');
-  if (!/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-    document.body.classList.add("noscroll");
-  }
+  document.body.classList.add("noscroll");
 
   const msgInput = document.querySelector("textarea[name='message']");
   if (msgInput) {
@@ -202,7 +179,6 @@ function closeContactForm() {
   document.body.classList.remove('blur-active', 'noscroll');
 }
 
-// ✅ Outside Click + Escape Handler
 function setupPopupHandlers() {
   document.querySelectorAll('.contact-form-popup, .login-form-popup').forEach(popup => {
     popup.addEventListener('click', (e) => {
@@ -227,8 +203,8 @@ function adjustHeroHeight() {
   if (hero) hero.style.height = `${window.innerHeight}px`;
 }
 
-// ✅ Init
-document.addEventListener("DOMContentLoaded", () => {
+// ✅ Init Everything
+window.addEventListener("DOMContentLoaded", () => {
   emailjs.init("9erwDRBB7eGa9wAV3");
 
   adjustHeroHeight();
@@ -239,22 +215,19 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("login-btn")?.addEventListener("click", showLoginForm);
   document.getElementById("contact-btn")?.addEventListener("click", openContactForm);
 
-  document.body.classList.add("noscroll");
-
-  window.addEventListener("wheel", handleScrollLock, { passive: false });
-  window.addEventListener("touchmove", handleScrollLock, { passive: false });
-
   document.getElementById("login-form")?.addEventListener("submit", submitLoginForm);
   document.getElementById("contact-form")?.addEventListener("submit", submitContactForm);
-});
 
-
-document.addEventListener("DOMContentLoaded", () => {
   const signupBtn = document.getElementById("signup-btn");
   if (signupBtn) {
     signupBtn.addEventListener("click", (e) => {
-      e.preventDefault(); // ⛔ stops <a href="#"> from reloading
-      submitSignUp();     // ✅ now this function gets called safely
+      e.preventDefault();
+      submitSignUp();
     });
   }
+
+  // Lock scroll on initial load
+  document.body.classList.add("noscroll");
+  window.addEventListener("wheel", handleScrollLock, { passive: false });
+  window.addEventListener("touchmove", handleScrollLock, { passive: false });
 });
