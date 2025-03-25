@@ -82,6 +82,15 @@ function playMusic() {
   }
 }
 
+// ✅ Prevent autoplay on refresh (iOS bug fix)
+window.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("background-music");
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+});
+
 // ✅ Scroll Lock Logic
 function shouldLockScroll() {
   return window.heroLocked && window.scrollY < window.innerHeight;
@@ -149,6 +158,7 @@ function showLoginForm() {
   popup?.classList.remove("hidden");
   popup.style.display = 'flex';
   document.body.classList.add('blur-active');
+  document.documentElement.classList.add('blur-active');
   document.body.classList.add("noscroll");
 }
 
@@ -157,6 +167,8 @@ function closeLoginForm() {
   popup?.classList.add("hidden");
   popup.style.display = 'none';
   document.body.classList.remove('blur-active', 'noscroll');
+  document.documentElement.classList.remove('blur-active');
+  if (window.scrollY >= window.innerHeight) window.heroLocked = false;
 }
 
 function openContactForm() {
@@ -164,6 +176,7 @@ function openContactForm() {
   popup?.classList.remove("hidden");
   popup.style.display = 'flex';
   document.body.classList.add('blur-active');
+  document.documentElement.classList.add('blur-active');
   document.body.classList.add("noscroll");
 
   const msgInput = document.querySelector("textarea[name='message']");
@@ -177,6 +190,8 @@ function closeContactForm() {
   popup?.classList.add("hidden");
   popup.style.display = 'none';
   document.body.classList.remove('blur-active', 'noscroll');
+  document.documentElement.classList.remove('blur-active');
+  if (window.scrollY >= window.innerHeight) window.heroLocked = false;
 }
 
 function setupPopupHandlers() {
@@ -186,6 +201,7 @@ function setupPopupHandlers() {
       if (!container.contains(e.target)) {
         popup.style.display = 'none';
         document.body.classList.remove('blur-active', 'noscroll');
+        document.documentElement.classList.remove('blur-active');
       }
     });
   });
@@ -203,6 +219,17 @@ function adjustHeroHeight() {
   if (hero) hero.style.height = `${window.innerHeight}px`;
 }
 
+// ✅ Hard Reset State on Load
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+  window.heroLocked = true;
+  document.body.classList.add("noscroll");
+  document.documentElement.classList.remove("blur-active");
+  document.body.classList.remove("blur-active");
+  document.documentElement.style.scrollSnapType = "y mandatory";
+  document.body.style.scrollSnapType = "y mandatory";
+});
+
 // ✅ Init Everything
 window.addEventListener("DOMContentLoaded", () => {
   emailjs.init("9erwDRBB7eGa9wAV3");
@@ -211,10 +238,10 @@ window.addEventListener("DOMContentLoaded", () => {
   setupVideoZoom();
   setupPopupHandlers();
 
+  document.querySelector(".play-btn")?.addEventListener("click", playMusic);
   document.getElementById("scroll-arrow")?.addEventListener("click", scrollToFeatures);
   document.getElementById("login-btn")?.addEventListener("click", showLoginForm);
   document.getElementById("contact-btn")?.addEventListener("click", openContactForm);
-
   document.getElementById("login-form")?.addEventListener("submit", submitLoginForm);
   document.getElementById("contact-form")?.addEventListener("submit", submitContactForm);
 
@@ -226,8 +253,13 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Lock scroll on initial load
-  document.body.classList.add("noscroll");
+  document.querySelectorAll(".close-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      closeLoginForm();
+      closeContactForm();
+    });
+  });
+
   window.addEventListener("wheel", handleScrollLock, { passive: false });
   window.addEventListener("touchmove", handleScrollLock, { passive: false });
 });
