@@ -481,7 +481,7 @@ section {
 @media (max-width: 768px) {
   .contact-form-popup,
   .login-form-popup {
-      display: none !important; /* 👈 FIX: prevent showing on load */
+      /* ✅ Remove display override so JS can show it */
       position: fixed;
       top: 0;
       left: 0;
@@ -492,13 +492,13 @@ section {
       align-items: center;
       z-index: 1000;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch; /* ✅ Fix for iOS bounce */
-      touch-action: manipulation;        /* ✅ Prevent weird zoom jitter */
-    }
+      -webkit-overflow-scrolling: touch;
+      touch-action: manipulation;
+  }
 
   .contact-form-container,
   .login-form-container {
-      max-height: 90vh;    /* Still allow scroll if needed */
+      max-height: 90vh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
   }

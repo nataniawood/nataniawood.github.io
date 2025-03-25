@@ -166,9 +166,12 @@ function showLoginForm() {
   popup.style.display = 'flex';
   document.body.classList.add('blur-active');
   if (!/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+  if (document.getElementById("login-form-popup")?.style.display === "flex" ||
+      document.getElementById("contact-form-popup")?.style.display === "flex") {
     document.body.classList.add("noscroll");
   }
 }
+
 
 function closeLoginForm() {
   const popup = document.getElementById('login-form-popup');
