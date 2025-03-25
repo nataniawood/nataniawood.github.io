@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90NKLB4SSX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90NKLB4SSX');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Photo Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .image-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .image-modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .image-modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .confirmation {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0077cc;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .confirmation.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="portfolio-header">
+    <h1>Media</h1>
+    <button onclick="window.location.href='index.html'" class="home-btn">← Home</button>
+  </header>
+
+  <section class="upload-section">
+    <label for="photo-upload" class="upload-trigger">
+      Upload <span class="arrow">➜</span>
+    </label>
+    <input type="file" id="photo-upload" accept="image/*" />
+  </section>
+
+  <main class="photo-grid" id="photo-grid"></main>
+
+  <div class="image-modal" id="image-modal">
+    <img src="" alt="Expanded View" id="modal-img" />
+  </div>
+
+  <div class="confirmation" id="confirmation">Media posted! ✨</div>
+
+  <!-- Load your portfolio logic -->
+  <script type="module" src="js/portfolio.js"></script>
+</>
+</html>

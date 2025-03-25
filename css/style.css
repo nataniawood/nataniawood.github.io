@@ -43,7 +43,7 @@ html, body {
     object-fit: cover;
     z-index: -2;
     transform: scale(var(--video-zoom, 1));
-    transition: transform 0.2s ease-out;
+    transition: transform 0.3s ease-out;
     will-change: transform;
 }
 
@@ -463,19 +463,51 @@ section {
 
 
 /* ------------------- FORM POPUPS ------------------- */
-/* Initial Hidden State for Popups */
-.contact-form-popup, .login-form-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.contact-form-popup,
+.login-form-popup {
+  display: none; /* ✅ Hides them on page load */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
+
+/* Initial Hidden State for Popups */
+@media (max-width: 768px) {
+  .contact-form-popup,
+  .login-form-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* ✅ Fix for iOS bounce */
+      touch-action: manipulation;        /* ✅ Prevent weird zoom jitter */
+    }
+
+  .contact-form-container,
+  .login-form-container {
+      max-height: 90vh;    /* Still allow scroll if needed */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+  }
+}
+
+      body.blur-active {
+          scroll-snap-type: none !important
+      }
+  }
 
 /* Form Container Styling */
 .contact-form-container,
@@ -513,16 +545,31 @@ section {
 
 /* Submit Button Styling */
 .submit-btn {
-    background-color: #191c11;
-    color: #d1d7c0;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  display: block;
+  margin: 20px auto 0; /* centers the button inside the form */
+  background-color: #5e6244;
+  color: #faffcc;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: 'Quicksand', sans-serif;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 0 8px rgba(165, 184, 83, 0.3),
+    0 0 12px rgba(250, 255, 204, 0.15);
+  transition: all 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #5e6244;
+  background-color: #6c744c;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow:
+    0 0 12px #a5b853,
+    0 0 24px #faffcc,
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .close-btn {
@@ -582,6 +629,14 @@ body.blur-active::before {
   z-index: 0; /* 👈 LOWER than the main content */
 }
 
+.form-title {
+    font-size: 2.8rem;
+    font-family: "Pacifico", cursive;
+    color: #d1d7c0;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+  }
 
 
 
@@ -649,215 +704,84 @@ body.blur-active::before {
 }
 
 
-/* ================== Mini Twitter App Styles ================== */
-
-/* General Body Styling for Mini Twitter */
 body {
-    background-color: #15202B;
-    color: #E1E8ED;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa;
+  color: #333;
 }
 
-/* Header Styling */
-.app-header {
-    background-color: #14171A;
-    color: white;
-    padding: 15px 20px;
-    text-align: center;
-    font-size: 1.5rem;
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.app-header h1 {
-    margin: 0;
-    font-size: 1.8rem;
+.portfolio-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
 }
 
-/* Logout Button Styling */
-.logout-btn {
-    background-color: #657786;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
+.home-btn {
+  background: none;
+  border: none;
+  color: #0077cc;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-.logout-btn:hover {
-    background-color: #AAB8C2;
+.upload-section {
+  text-align: center;
+  margin: 30px 0;
 }
 
-/* Post Form Styling */
-.post-form {
-    padding: 20px;
-    background-color: #1B2631;
-    margin: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.upload-trigger {
+  display: inline-block;
+  background: #ffffff;
+  color: #0077cc;
+  border: 2px dashed #cce4f6;
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* Post Input Fields Styling */
-.username-input,
-#post-input {
-    padding: 12px;
-    border-radius: 5px;
-    border: 1px solid #657786;
-    background-color: #2C3E50;
-    color: white;
-    font-size: 1rem;
-    outline: none;
+.upload-trigger:hover {
+  background: #eef9ff;
+  border-color: #0077cc;
 }
 
-/* Focused Post Input Styling */
-#post-input:focus {
-    border-color: #1DA1F2;
+.arrow {
+  margin-left: 8px;
+  font-weight: bold;
 }
 
-
-/* Button Container */
-.button-container {
-    display: flex;                     /* Use flex to align buttons side by side */
-    justify-content: center;           /* Center buttons horizontally */
-    gap: 10px;                         /* Space between buttons */
-    width: 100%;                       /* Make sure container takes full width */
-    align-items: center;               /* Align buttons vertically centered */
+/* Hide file input */
+#photo-upload {
+  display: none;
 }
 
-/* Button Styling for Upload Image and Post */
-.upload-btn,
-.post-btn {
-    background-color: #1DA1F2;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;                       /* Adjust button width to fit content */
+/* Grid layout */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Custom Styling for file input (hidden) */
-.photo-upload {
-    display: none;                     /* Hide the file input */
+.photo-grid img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  object-fit: cover;
 }
 
-
-/* Image Preview Styling */
-#image-preview-container {
-    margin-top: 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background-color: #fff;
-    display: none; /* Hide until an image is uploaded */
-}
-
-/* Preview Styling */
-.image-preview {
-    max-width: 100%;
-    height: auto;
-}
-
-
-/* Posts Section Styling */
-.posts-section {
-    padding: 20px;
-    background-color: #1B2631;
-    margin: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.posts-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Post Styling */
-.post {
-    background-color: #2C3E50;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #34495E;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Post Header Styling */
-.post-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.post-username {
-    font-weight: bold;
-    color: #1DA1F2;
-}
-
-.post-text {
-    font-size: 1.1rem;
-    color: #E1E8ED;
-}
-
-.post-time {
-    font-size: 0.9rem;
-    color: #657786;
-    align-self: flex-end;
-}
-
-/* Footer Styling for Mini Twitter */
-footer {
-    background-color: #14171A;
-    color: #657786;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-/* Media Query for Responsiveness */
-@media (max-width: 768px) {
-    .app-header h1 {
-        font-size: 1.5rem;
-    }
-
-    .post-form {
-        margin: 10px;
-    }
-
-    .posts-section {
-        margin: 10px;
-    }
-
-    #post-input {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-
-    .post-btn,
-    .upload-btn {
-        font-size: 0.9rem;
-        padding: 10px 18px;
-        width: 48%; /* Same width in mobile view */
-    }
-}
-
-/* Hide the default file input */
-.photo-upload {
-    display: none;
-}
 
 /* ------------------- RESPONSIVE STYLING ------------------- */
 /* Media Query for iPhones */
