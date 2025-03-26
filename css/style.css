@@ -1,3 +1,8 @@
+root {
+    --video-zoom: 1;
+  }
+
+
 /* ================== General Reset ================== */
 * {
     margin: 0;
@@ -42,9 +47,10 @@ html, body {
     height: 100vh;
     object-fit: cover;
     z-index: -2;
-    transform: scale(var(--video-zoom, 1));
+    transform: scale(var(--video-zoom));
     transition: transform 0.3s ease-out;
     will-change: transform;
+    pointer-events: none;
 }
 
 /* Global Dark Overlay */

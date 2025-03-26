@@ -143,28 +143,38 @@ function scrollToFeatures() {
 
 // ✅ Scroll-Based Video Zoom
 function setupVideoZoom() {
+  const video = document.getElementById("hero-video");
+  const scrollTarget = document.body; // 👈 Safari scrolls body
+  if (!video) return;
+
   let ticking = false;
+
   function updateZoom() {
-    const scrollY = window.scrollY;
+    const scrollY = scrollTarget.scrollTop;
     const trigger = window.innerHeight / 2;
+
     if (!window.heroLocked && scrollY > trigger) {
-      const progress = (scrollY - trigger) / (document.body.scrollHeight - window.innerHeight - trigger);
+      const progress = (scrollY - trigger) / (scrollTarget.scrollHeight - window.innerHeight - trigger);
       const clamped = Math.min(Math.max(progress, 0), 1);
       const scale = 1 + clamped * 0.5;
-      document.documentElement.style.setProperty('--video-zoom', scale);
+
+      video.style.transform = `scale(${scale})`;
     } else {
-      document.documentElement.style.setProperty('--video-zoom', 1);
+      video.style.transform = `scale(1)`;
     }
+
+    console.log("🌀 updateZoom", { scrollY, heroLocked: window.heroLocked });
     ticking = false;
   }
 
-  window.addEventListener("scroll", () => {
+  scrollTarget.addEventListener("scroll", () => {
     if (!ticking) {
       ticking = true;
       requestAnimationFrame(updateZoom);
     }
   });
 }
+
 
 // ✅ Popup Logic
 function showLoginForm() {
@@ -236,7 +246,10 @@ function adjustHeroHeight() {
 // ✅ Hard Reset State on Load
 window.addEventListener("load", () => {
   window.scrollTo(0, 0);
-  window.heroLocked = true;
+  if (window.heroLocked === undefined) {
+    window.heroLocked = true;
+  }
+
 
   // Only apply scroll lock if user hasn't already unlocked
   if (window.heroLocked) {
@@ -288,4 +301,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("wheel", handleScrollLock, { passive: false });
   window.addEventListener("touchmove", handleScrollLock, { passive: false });
+  window.addEventListener("scroll", () => {
+    console.log("🔥 BASIC scroll event fired");
+  });
 });
