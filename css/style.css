@@ -318,13 +318,16 @@ section {
 }
 
 .feature-card {
-    background-color: rgba(92, 96, 69, 0.2);
+    background-color: rgba(92, 96, 69, 0.4); /* 🔥 bump from 0.2 to 0.4 */
+    backdrop-filter: blur(10px);            /* 🔥 increase blur a bit */
+    -webkit-backdrop-filter: blur(10px);    /* 🔥 ensure Safari sees it */
+/*    background-color: rgba(92, 96, 69, 0.2);*/
     padding: 20px;
     border-radius: 8px;
     width: 450px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
-    backdrop-filter: blur(6px);
+/*    backdrop-filter: blur(6px);*/
 }
 
 .feature-card h3 {
@@ -400,7 +403,10 @@ section {
 
 /* Button Styling */
 .login-btn, .contact-btn, .shop-btn {
-    background-color: rgba(92, 96, 69, 0.2);
+    background-color: rgba(92, 96, 69, 0.4); /* 🔥 bump from 0.2 to 0.4 */
+    backdrop-filter: blur(10px);            /* 🔥 increase blur a bit */
+    -webkit-backdrop-filter: blur(10px);    /* 🔥 ensure Safari sees it */
+/*    background-color: rgba(92, 96, 69, 0.2);*/
     color: #d1d7c0;
     padding: 15px 20px; /* Consistent padding for all buttons */
     text-align: center;
@@ -413,7 +419,7 @@ section {
     transition: background-color 0.3s ease, transform 0.3s ease;
     width: 200px; /* Fixed width for all buttons */
     height: 50px; /* Fixed height for all buttons */
-    backdrop-filter: blur(6px);
+/*    backdrop-filter: blur(6px);*/
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -501,7 +507,7 @@ section {
 .contact-form-container,
 .login-form-container {
   background: rgba(92, 96, 69, 0.25); /* Greenish tint */
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 30px;
@@ -623,7 +629,7 @@ body.blur-active::before {
     color: #d1d7c0;
     text-align: center;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0);
   }
 
   .signup-line {
@@ -1011,7 +1017,7 @@ body {
 
 html,
 body {
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
 }
 
 

@@ -104,28 +104,42 @@ function handleScrollLock(e) {
 }
 
 function scrollToFeatures() {
+  // Unlock all scroll locks hard
   window.heroLocked = false;
+
+  // Remove ALL overflow + noscroll blockers
   document.body.classList.remove("noscroll");
+  document.documentElement.classList.remove("noscroll");
+  document.body.style.overflow = "auto";
+  document.documentElement.style.overflow = "auto";
+  document.body.style.overscrollBehavior = "auto";
+  document.documentElement.style.overscrollBehavior = "auto";
+
+  // Remove scroll snapping before scroll
+  document.documentElement.style.scrollSnapType = "none";
+  document.body.style.scrollSnapType = "none";
+
   const target = document.getElementById("features");
   const arrow = document.getElementById("scroll-arrow");
   const label = document.getElementById("scroll-label");
+
   arrow?.classList.add("hidden");
   label?.classList.add("hidden");
 
-  if (window.innerWidth <= 768) {
-    document.documentElement.style.scrollSnapType = "none";
-    document.body.style.scrollSnapType = "none";
+  // Wait for DOM to be ready before triggering scroll
+  requestAnimationFrame(() => {
     setTimeout(() => {
-      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // Re-enable scroll snapping *after* scroll completes
       setTimeout(() => {
         document.documentElement.style.scrollSnapType = "y mandatory";
         document.body.style.scrollSnapType = "y mandatory";
-      }, 600);
+      }, 1000);
     }, 50);
-  } else {
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  });
 }
+
 
 // ✅ Scroll-Based Video Zoom
 function setupVideoZoom() {
@@ -223,17 +237,29 @@ function adjustHeroHeight() {
 window.addEventListener("load", () => {
   window.scrollTo(0, 0);
   window.heroLocked = true;
-  document.body.classList.add("noscroll");
-  document.documentElement.classList.remove("blur-active");
-  document.body.classList.remove("blur-active");
+
+  // Only apply scroll lock if user hasn't already unlocked
+  if (window.heroLocked) {
+    document.body.classList.add("noscroll");
+    document.documentElement.classList.remove("blur-active");
+    document.body.classList.remove("blur-active");
+  }
+
   document.documentElement.style.scrollSnapType = "y mandatory";
   document.body.style.scrollSnapType = "y mandatory";
 });
+
 
 // ✅ Init Everything
 window.addEventListener("DOMContentLoaded", () => {
   emailjs.init("9erwDRBB7eGa9wAV3");
 
+  // Force ensure scroll is allowed in Safari
+  document.body.style.overflow = "auto";
+  document.documentElement.style.overflow = "auto";
+  document.body.classList.remove("noscroll");
+  document.documentElement.classList.remove("noscroll");
+  
   adjustHeroHeight();
   setupVideoZoom();
   setupPopupHandlers();
