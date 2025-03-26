@@ -30,6 +30,17 @@ function showConfirmation() {
   setTimeout(() => confirmation.classList.remove("show"), 2000);
 }
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("✅ Logged in as:", user.email);
+  } else {
+    console.warn("⛔ Not logged in. Firebase Storage will fail without auth.");
+    // Optional: redirect or show login form
+  }
+});
+
+console.log("Current user:", getAuth().currentUser);
+
 function openModal(src) {
   modalImg.src = src;
   modal.classList.add("active");
@@ -76,7 +87,7 @@ async function loadImages() {
     const img = document.createElement("img");
     img.src = data.url;
     img.alt = "Uploaded photo";
-    img.classList.add("grid-photo");
+    img.classList.add("uploaded-photo");
     img.addEventListener("click", () => openModal(img.src));
     photoGrid.appendChild(img);
   });
